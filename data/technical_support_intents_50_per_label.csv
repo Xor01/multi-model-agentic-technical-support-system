@@ -1,0 +1,401 @@
+﻿text,label
+TLS connections fail through the corporate proxy while plain HTTP works.,network
+A table is locked and writes are waiting indefinitely.,database
+The latest package release removed a function my code uses.,package
+The library installation fails because a system dependency is missing.,package
+A network request fails only when the payload is large.,network
+Our application cannot connect to an external API from inside the container network.,network
+Why is normalization useful when training machine learning models?,general
+The CUDA kernel fails only for one specific batch.,gpu
+The production image does not contain a dependency that was available during development.,deployment
+The connection pool does not release connections after requests complete.,database
+Explain what an AI agent is.,general
+"Training uses the GPU, but inference unexpectedly runs on the CPU.",gpu
+My machine cannot resolve the internal domain name.,network
+The endpoint accepts the payload but silently ignores an unknown field.,api
+The endpoint returns 409 Conflict when I try to create a resource.,api
+pip warns that its resolver is ignoring an already installed conflicting package.,package
+Packets appear to be dropped between two network segments.,network
+I get a forbidden message after login even though authentication succeeded.,authentication
+The database connection pool is leaking connections over time.,database
+My deployment is stuck in a pending state.,deployment
+"The container is running, but no port is published to the host.",deployment
+The package documentation refers to a class that does not exist in my installed version.,package
+The deployed service cannot read the secret that exists in the cluster.,deployment
+A database migration fails with a duplicate key error.,database
+"I changed my password, but the old password still seems to be required.",authentication
+The container cannot mount the configured volume in production.,deployment
+What does hallucination mean for a language model?,general
+The login page sends me back to the sign-in screen after I enter my credentials.,authentication
+The module name I need to import is different from the package name I installed.,package
+The package manager cannot verify the registry certificate during installation.,package
+The Kubernetes service exists but no endpoints are registered for it.,deployment
+A new environment variable is present in CI but missing from the running deployment.,deployment
+"Changing the DNS server fixes the connection temporarily, then the problem returns.",network
+The OAuth callback returns an invalid state error after I approve access.,authentication
+The production build fails during the deployment pipeline.,deployment
+I cannot connect to the service after changing the network configuration.,network
+The import path changed after upgrading the library.,package
+An index exists in development but is missing from production.,database
+Docker Compose cannot start one of the services.,deployment
+The server can make outbound requests to some domains but not others.,network
+What is the difference between semantic search and keyword search?,general
+The database disk usage keeps growing even after many records are deleted.,database
+The server is reachable from one VLAN but unreachable from another.,network
+What is the difference between a parameter and a hyperparameter?,general
+The application becomes unreachable whenever I enable the VPN.,network
+The endpoint expects an integer but my client sends it as a string.,api
+Requests work through localhost but fail when I use the server's network address.,network
+The ORM says the schema is out of sync with the database.,database
+A tensor is created on CPU even though the model is already on CUDA.,gpu
+My PATCH request is not updating the resource.,api
+Explain what LoRA is in simple terms.,general
+The application fails to start after I updated the Docker image.,deployment
+The package requires a newer version of glibc than the server provides.,package
+I cannot reach the remote host after a router configuration change.,network
+The service hostname resolves to the wrong IP address.,network
+The endpoint returns 415 Unsupported Media Type.,api
+The authentication server says the redirect URI does not match.,authentication
+PostgreSQL connections are exhausted and new requests cannot connect.,database
+I need to find which package version still contains a deprecated function used by my project.,package
+My API call succeeds in Postman but fails because of CORS in the browser.,api
+Rows are not being updated even though the transaction completes.,database
+What does zero-shot classification mean?,general
+I can reach the server by IP address but not by hostname.,network
+The startup command works locally but fails inside the deployed container.,deployment
+What is retrieval-augmented generation?,general
+The server responds to ping but the application port is unreachable.,network
+My endpoint accepts JSON but rejects the same fields when sent as form data.,api
+My request body is not being parsed by the server.,api
+The API responds with 500 for one specific endpoint.,api
+The model and input tensors are on different devices.,gpu
+The ingress controller receives traffic but cannot route it to the service.,network
+A pagination parameter is ignored and every request returns the first page.,api
+Single sign-on redirects me to an access denied page.,authentication
+My service is not exposed after deploying it to the cluster.,deployment
+The API gateway strips part of the path before forwarding the request.,api
+The client times out before the long-running API operation completes.,api
+A query fails because the column type does not match the provided value.,database
+The deployment rolled back automatically after the new version started.,deployment
+The package works globally but is missing inside my virtual environment.,package
+The database transaction is being rolled back unexpectedly.,database
+npm reports an unmet peer dependency.,package
+My GPU process is still consuming memory after the Python script stops.,gpu
+The server receives the request but one custom header is missing.,api
+The backend can reach the database locally but not across the private network.,network
+An account created through SSO cannot use the normal password login.,authentication
+The application starts correctly in staging but fails when promoted to production.,deployment
+The training process fails with a CUDA device-side assert.,gpu
+I receive an invalid credentials message only when signing in from the mobile app.,authentication
+The service is accessible internally but not from the public internet.,network
+The service rejects a JWT with an invalid signature error.,authentication
+The application starts manually on the host but fails when launched by the deployment process.,deployment
+The load balancer health check fails even though direct requests to the instance work.,network
+The service returns 503 Service Unavailable during startup.,api
+The requirements file installs conflicting versions of two packages.,package
+An npm package works on my teammate's machine but not on mine.,package
+"The database service is running, but the application receives connection refused.",database
+The application reports a deadlock during concurrent updates.,database
+The package fails to compile because a C compiler is not installed.,package
+"The GPU is detected, but the operation falls back to a CPU implementation.",gpu
+I need to downgrade a dependency because the newest version breaks my application.,package
+"CUDA is available, but my training job still runs on the CPU.",gpu
+My project imports an older package version than the one I installed.,package
+A library upgrade changed a constructor argument and now my code raises a type error.,package
+The database reports serialization failures during concurrent transactions.,database
+Requests fail only when they pass through the reverse proxy.,network
+What does model inference mean?,general
+The password reset link says it has expired.,authentication
+A container cannot communicate with another container on the same Docker network.,network
+The API response takes too long and eventually returns a gateway timeout.,api
+The authorization code from the identity provider is reported as already used.,authentication
+"A schema change succeeds, but the application still queries the old column name.",database
+A dependency is available in my local environment but missing in the Docker image.,package
+The application keeps asking for MFA on every request instead of once per session.,authentication
+The application writes data successfully but cannot read it back in a later request.,database
+The API rejects the request because of an invalid content type.,api
+"Database reads work, but every write operation fails.",database
+My SSO login works for other apps but fails for this service.,authentication
+The application cannot bind to its configured port inside the container.,deployment
+I get an NCCL error when starting multi-GPU training.,gpu
+My release is stuck waiting for the readiness probe.,deployment
+The container cannot access the NVIDIA runtime even though the driver works on the host.,gpu
+I can log in on my phone but not on my laptop.,authentication
+Why would an AI agent call a tool instead of answering directly?,general
+The ORM generates a query that is much slower than the SQL I wrote manually.,database
+I installed a new NVIDIA driver and now PyTorch cannot use the GPU.,gpu
+"My request reaches the endpoint, but the path parameter has the wrong value.",api
+What does overfitting mean in machine learning?,general
+My training becomes slower when I enable the GPU.,gpu
+"My organization account is active, but I get an unauthorized login message.",authentication
+My Helm upgrade completes but the pods never become ready.,deployment
+"The notebook detects the GPU, but the model parameters remain on the CPU.",gpu
+The application loses connectivity after the DHCP lease renews.,network
+My migration fails because existing rows violate the new constraint.,database
+pip install fails while building the package wheel.,package
+The endpoint returns duplicate items when I request the next page.,api
+Explain the difference between static and dynamic padding.,general
+Installing one library causes a dependency conflict with another.,package
+pip selects an older transitive dependency than the library documentation expects.,package
+What is the difference between precision and recall?,general
+My project works after pip install but fails after recreating the environment from requirements.txt.,package
+The API returns a different schema depending on whether the result is empty.,api
+My model only uses a small percentage of the GPU.,gpu
+What is the difference between classification and regression?,general
+The API works from home but times out when I connect through the office VPN.,network
+Explain why a validation set should not be used as the final test set.,general
+An OPTIONS request fails and the browser blocks the real API call.,api
+TensorFlow does not list my GPU as an available device.,gpu
+"The browser login succeeds, but the API token exchange fails.",authentication
+My database connection closes after being idle for a few minutes.,database
+A transitive dependency update broke my application without changing my requirements file.,package
+pip cannot find a compatible version of the package.,package
+A transaction stays open and blocks other updates for several minutes.,database
+The connection works with IPv4 but fails when IPv6 is used.,network
+"The NVIDIA driver is installed, but CUDA cannot detect the GPU.",gpu
+I need to know which version of PyTorch is compatible with this library.,package
+The container works on my machine but not on the server.,deployment
+"The login request succeeds, but the application immediately returns me to the sign-in page.",authentication
+The endpoint returns a successful status but does not save the data.,api
+The server returns 429 Too Many Requests after only a few calls.,api
+"nvidia-smi sees the GPU, but my Python environment does not.",gpu
+I can establish a connection with curl but the browser request times out.,network
+"After changing my email address, I can no longer log in to the account.",authentication
+My notebook runtime disconnects whenever GPU memory reaches its limit.,gpu
+A stored query returns different results after upgrading PostgreSQL.,database
+The CI pipeline builds successfully but the release step fails.,deployment
+The response JSON is missing a field that should be present.,api
+The library requires a newer version of Python than my environment provides.,package
+PostgreSQL says the relation does not exist.,database
+I never receive the password reset email.,authentication
+The package requires Rust to build from source on this machine.,package
+How does a transformer model process text?,general
+What does quantization do to a language model?,general
+The database reports that the current transaction is aborted after one query fails.,database
+I can authenticate in the browser but the desktop application keeps asking me to sign in.,authentication
+What is an epoch in machine learning?,general
+The application fails with a timeout while waiting for a database connection from the pool.,database
+"Explain the difference between training, validation, and test data.",general
+The latest deployment introduced a failing liveness probe.,deployment
+The API returns a validation error for a field that I already provided.,api
+A Docker volume is empty after redeploying the service.,deployment
+The server has the new container image but Compose keeps running the previous container.,deployment
+A query works in the database console but fails from the application.,database
+The installed PyTorch build was compiled without CUDA support.,gpu
+My deployment fails because the target namespace does not exist.,deployment
+A request fails because the URL contains an encoded character in the path parameter.,api
+I am seeing very high latency between the client and the server.,network
+PyTorch and the installed CUDA toolkit appear to have incompatible versions.,gpu
+The endpoint works with GET but fails when I use POST.,api
+My DELETE request returns success but the resource is still available afterward.,api
+Our websocket connection drops immediately after passing through the proxy.,network
+The CUDA runtime version reported by PyTorch differs from the system toolkit.,gpu
+"The package installation succeeds, but importing it raises a shared library error.",package
+Training crashes with a CUDA out of memory error.,gpu
+The package manager reports a hash mismatch while installing from the lock file.,package
+What is the purpose of an embedding model?,general
+The API returns 502 when the backend service is under load.,api
+A dependency installs correctly on Linux but has no compatible wheel for Windows.,package
+The CUDA context cannot be created because another process is consuming most of the memory.,gpu
+The API returns 413 Request Entity Too Large when I upload a file.,api
+The deployment cannot schedule because the cluster has insufficient memory.,deployment
+The container starts but the service never becomes ready.,deployment
+A bulk insert fails halfway through and leaves the transaction rolled back.,database
+The service is reachable by hostname from Linux but not from Windows.,network
+The service is listening locally but remote machines cannot connect to it.,network
+A Kubernetes deployment has zero available replicas.,deployment
+The client reports connection refused when trying to reach the server.,network
+What is the difference between extractive QA and generative QA?,general
+"The system has two GPUs, but only one is visible inside the container.",gpu
+pip is installing the package into a different Python environment.,package
+My access token expires much earlier than the configured lifetime.,authentication
+The deployment fails because a required secret file is not mounted.,deployment
+Explain the difference between an LLM and an embedding model.,general
+"The build stage succeeds, but copying artifacts into the final Docker image fails.",deployment
+CUDA becomes unavailable after I install a different version of PyTorch.,gpu
+The login form says my username does not exist even though the account is active.,authentication
+A newly created user cannot sign in even though the account shows as enabled.,authentication
+The training process cannot initialize CUDA after the machine resumes from sleep.,gpu
+Explain the difference between LoRA and full fine-tuning.,general
+The remember-me option does not keep me signed in.,authentication
+I forgot my password and the recovery process is not letting me set a new one.,authentication
+The API ignores one of the headers included in my request.,api
+"The account activation email works, but the user remains marked as unverified.",authentication
+I cannot verify my email address because the confirmation link is invalid.,authentication
+The application cannot find its environment variables after deployment.,deployment
+Our read replica is returning stale data compared with the primary database.,database
+My backup recovery codes are not accepted during two-factor authentication.,authentication
+"I can sign in with email and password, but social login fails.",authentication
+"Signing in from an incognito window works, while my normal browser profile fails.",authentication
+The migration fails because a column already exists.,database
+One GPU is visible to the host but missing from the Kubernetes pod.,gpu
+The verification code from my authenticator is always rejected.,authentication
+Training stops with a cuBLAS initialization error.,gpu
+A migration added the column locally but not in production.,database
+Python says the module is not installed even though pip completed successfully.,package
+I cannot sign in after resetting my password.,authentication
+What does a model checkpoint contain?,general
+The ORM tries to insert NULL into a column that is marked NOT NULL.,database
+The code fails with expected all tensors to be on the same device.,gpu
+What is the purpose of evaluating a model against a baseline?,general
+GPU memory usage increases after every inference request.,gpu
+Network requests are much slower in one office location than another.,network
+Our rollback restores the application but leaves the database migration from the failed release.,deployment
+The application cannot insert a record because of a unique constraint.,database
+The application cannot connect when using the company proxy.,network
+My Docker container exits immediately after startup.,deployment
+The package installs on Python 3.11 but fails on Python 3.13.,package
+The rollout hangs because one replica never passes its readiness check.,deployment
+Which version of langchain should I install for this example?,package
+The password reset form accepts the new password but I still cannot sign in.,authentication
+The application cannot connect to the database after I changed the credentials.,database
+The dependency resolver cannot satisfy the version requirements.,package
+The container starts as healthy and then restarts after a few seconds.,deployment
+DNS resolution fails only inside our corporate network.,network
+The application works on port 80 but connections to port 443 fail.,network
+The API returns 401 even though I am sending an access token.,api
+The SQL query returns duplicate records that I did not expect.,database
+The application fails after deployment because the working directory is different.,deployment
+PostgreSQL terminates long-running queries before they finish.,database
+My account keeps rejecting the correct password.,authentication
+The API returns 403 Forbidden for a request that used to work.,api
+My SQL query is blocked by another transaction.,database
+My API key is valid but the service says authentication credentials are missing.,authentication
+The server reports that a required header is missing even though I set it in the client.,api
+What is observability in an AI application?,general
+The library's latest release no longer supports my Python version.,package
+Distributed training hangs when the workers try to synchronize across GPUs.,gpu
+"The deployment succeeds, but the application returns errors in production.",deployment
+My account was locked after several failed login attempts.,authentication
+I receive a 404 when calling an endpoint that exists in the documentation.,api
+"The VPN tunnel is connected, but routes to the private subnet are missing.",network
+What is the purpose of a system prompt?,general
+What is temperature in text generation?,general
+Requests fail with a connection timeout from one subnet only.,network
+The package installs from source but fails when importing a native extension.,package
+The package version in the lock file differs from the version installed in the environment.,package
+Queries are suddenly taking much longer than usual.,database
+"The new image was deployed, but the old version is still running.",deployment
+"The identity provider accepts my credentials, but the application still says authentication failed.",authentication
+The reverse proxy cannot establish a connection to the upstream service.,network
+The container image builds successfully but fails during startup on the server.,deployment
+The pod is evicted shortly after deployment because of resource limits.,deployment
+The deployment completed but the new code is not visible.,deployment
+Why can class imbalance hurt a classifier?,general
+A request with a valid JSON body fails because one nested field has the wrong shape.,api
+The authentication cookie is created but disappears after the redirect.,authentication
+The login flow fails after we changed the identity provider certificate.,authentication
+My client receives a 405 Method Not Allowed response.,api
+PostgreSQL rejects the connection because the configured database name does not exist.,database
+What is the difference between fine-tuning and prompt engineering?,general
+My POST request returns 400 even though the JSON looks correct.,api
+What does macro F1 measure?,general
+The API sometimes returns an HTML error page instead of JSON.,api
+The deployment pipeline cannot pull the container image from the registry.,deployment
+Internal DNS returns different addresses on two machines.,network
+My refresh token is rejected even though it has not expired.,authentication
+My deployment keeps pulling an older image tag from the registry.,deployment
+The application cannot delete a parent record because dependent rows still reference it.,database
+My GPU training crashes only when using multiple workers in the data loader.,gpu
+A query that used to use an index now performs a full table scan.,database
+The code works on CPU but crashes when moved to CUDA.,gpu
+The proxy server is preventing the application from reaching the internet.,network
+A required query parameter is not being recognized.,api
+Users from our company domain cannot complete the SSO flow.,authentication
+I get ModuleNotFoundError after installing the dependency.,package
+Explain QLoRA and how it differs from standard LoRA.,general
+I get a cuDNN error when starting the training loop.,gpu
+Connections to the service are being blocked by the firewall.,network
+Updating the dependency introduced a breaking API change.,package
+"The dependency is installed, but Python imports another copy from a different path.",package
+The database connection works from the host but not from the application container.,database
+The server rejects my JSON payload because of schema validation.,api
+What is a golden set in model evaluation?,general
+Clients outside the office cannot resolve our internal service domain.,network
+GPU utilization is high but the training throughput is unexpectedly low.,gpu
+What is a learning rate scheduler used for?,general
+The production environment uses a different startup command than staging and it crashes.,deployment
+The database is consuming unusually high CPU during simple queries.,database
+The second graphics card is detected but never receives any training workload.,gpu
+Traffic reaches the load balancer but never arrives at the backend server.,network
+The API accepts the request but returns the wrong status code.,api
+My GPU memory remains allocated after the training job finishes.,gpu
+Why do neural networks use activation functions?,general
+What is a confusion matrix used for?,general
+The application throws a foreign key constraint error when saving data.,database
+What is fine-tuning and why is it useful?,general
+A recently added firewall rule appears to block outbound HTTPS traffic.,network
+An npm dependency cannot be installed because its Node.js version requirement is not satisfied.,package
+My virtual environment contains two packages that require incompatible NumPy versions.,package
+The new release works locally but fails after deployment.,deployment
+What is the purpose of a tokenizer in a transformer model?,general
+The endpoint responds correctly without parameters but crashes when a filter is supplied.,api
+The API response format changed after the latest update.,api
+The GPU utilization stays near zero during model training.,gpu
+I cannot sign in after my administrator changed my account permissions.,authentication
+The connection drops every few minutes even though the server remains online.,network
+A PostgreSQL query is using a sequential scan and has become very slow.,database
+The application connects to the wrong database environment after deployment.,database
+How does gradient descent update a model?,general
+The model trains correctly with float32 but fails when I enable float16.,gpu
+The application sees more CUDA devices than I intended to expose.,gpu
+Which version of transformers supports this feature?,package
+"After restoring a backup, some tables are missing their expected sequences.",database
+A port scan shows that the service port is closed.,network
+What is a context window in a language model?,general
+The health check fails after the latest deployment.,deployment
+A blue-green deployment sends traffic to the new version before it is ready.,deployment
+The proxy returns a bad gateway because it cannot reach the upstream host.,network
+My login session is invalidated every few minutes.,authentication
+The endpoint returns an empty response instead of the expected JSON.,api
+The model cannot allocate a small tensor even though GPU memory appears available.,gpu
+What is the difference between supervised and unsupervised learning?,general
+Explain what a vector database is.,general
+The application loses connectivity whenever the network switches between Wi-Fi and Ethernet.,network
+Why do language models use tokens?,general
+Why do we split data into training and testing sets?,general
+What is catastrophic forgetting during fine-tuning?,general
+Poetry cannot resolve the dependency constraints in my project.,package
+The model is running on GPU 0 even though I selected GPU 1.,gpu
+The connection pool reaches its maximum size under load.,database
+The library needs a system package that is not available in the slim Docker image.,package
+"I installed the package from requirements.txt, but its optional dependency is missing.",package
+What is a learning rate and why does it matter?,general
+"I installed the library with pip, but the notebook kernel uses another environment.",package
+The database reports too many connections.,database
+I lost access to my authenticator app and cannot complete MFA.,authentication
+The response contains malformed JSON.,api
+"The model moves to CUDA successfully, but the training data remains on the CPU.",gpu
+The TCP connection succeeds but is reset before any response is returned.,network
+CUDA reports an invalid device ordinal.,gpu
+Users are being logged out whenever they refresh the page.,authentication
+Explain what cosine similarity measures.,general
+An optional feature fails because the corresponding extra was not installed.,package
+The API returns 204 but I expected a JSON response.,api
+Installing the GPU variant of the package replaces the CPU-only build.,package
+PyTorch says no CUDA device is available even though the GPU is installed.,gpu
+The migration tool says there are multiple conflicting migration heads.,database
+The application says my session has expired immediately after I log in.,authentication
+My process receives an illegal memory access error during backpropagation.,gpu
+The release pipeline cannot authenticate to the container registry.,deployment
+Mixed precision training causes a CUDA error.,gpu
+Multi-GPU training only uses one graphics card.,gpu
+Our internal service is unreachable across the site-to-site VPN.,network
+The one-time password sent to my phone does not work.,authentication
+MFA was enabled on my account and now I cannot access the dashboard.,authentication
+My session cookie is not sent when the frontend calls the backend.,authentication
+CUDA initialization fails with an unknown error inside Docker.,gpu
+The service works over Wi-Fi but not over the wired network.,network
+The database returns permission denied when the application reads a table.,database
+What does a routing layer do in a multi-model AI system?,general
+The server rejects the request because the timestamp format is invalid.,api
+The application crashes during the Kubernetes rollout.,deployment
+What does batch size mean during model training?,general
+The production container is missing a file that exists in the local build.,deployment
+The GPU runs out of memory when I increase the batch size.,gpu
+The endpoint returns HTTP 422 when I send my request.,api
+The endpoint works in Swagger but fails from my frontend application.,api
+How does attention work at a high level?,general
+I am stuck in an endless login redirect loop.,authentication
+My Kubernetes pod keeps restarting with CrashLoopBackOff.,deployment
+The response status is 200 but the body contains an application error.,api
