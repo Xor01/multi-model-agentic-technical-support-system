@@ -1,0 +1,14 @@
+-r requirements.txt
+
+torch
+transformers
+datasets
+peft
+trl
+accelerate
+bitsandbytes; platform_system == "Linux"
+sentence-transformers
+scikit-learn
+pandas
+numpy
+psycopg[binary]

@@ -1,18 +1,7 @@
 fastapi
 uvicorn[standard]
-torch
-transformers
-datasets
-peft
-trl
-accelerate
-bitsandbytes; platform_system == "Linux"
 langgraph
+langchain
 langchain-core
 langfuse
-sentence-transformers
-scikit-learn
-pandas
-numpy
-psycopg[binary]
 python-dotenv
