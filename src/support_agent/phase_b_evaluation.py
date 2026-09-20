@@ -1,10 +1,3 @@
-"""Small, honest Phase B evaluation helpers for the learning project.
-
-The recorded values below come from outputs already saved in the three model
-notebooks. Missing baselines and unimplemented system components deliberately
-remain NOT_EVALUATED rather than being replaced with made-up measurements.
-"""
-
 from __future__ import annotations
 
 from collections import Counter
