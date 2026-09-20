@@ -1,0 +1,54 @@
+{
+  "generated_at": "2026-09-20T11:37:01.209192+00:00",
+  "evidence_policy": "Real local executions and saved notebook outputs only; missing values are not inferred.",
+  "router": {
+    "sample_count": 400,
+    "routing_accuracy": 0.82,
+    "macro_f1": 0.5470509125840538,
+    "per_route_f1": {
+      "qa": 0.0,
+      "support": 0.8399999999999999,
+      "tools": 0.8011527377521614
+    },
+    "fallback_rate": 0.9925,
+    "average_latency_ms": 0.4829409995727474,
+    "wrong_route_count": 72,
+    "source_counts": {
+      "deterministic_fallback": 397,
+      "rule": 3
+    }
+  },
+  "retrieval": {
+    "sample_count": 100,
+    "mrr": 1.0,
+    "recall_at_5": 1.0,
+    "failed_queries": []
+  },
+  "end_to_end_agent": {
+    "task_success_rate": 0.1,
+    "average_latency_ms": 3.7189000000000005,
+    "escalation_rate": 0.0
+  },
+  "golden_set": {
+    "passed": 1,
+    "total": 10,
+    "quality_gate": "FAIL",
+    "results": {
+      "G01": false,
+      "G02": false,
+      "G03": false,
+      "G04": false,
+      "G05": false,
+      "G06": false,
+      "G07": true,
+      "G08": false,
+      "G09": false,
+      "G10": false
+    }
+  },
+  "external_evidence": {
+    "langfuse_trace": "BLOCKED_INVALID_CREDENTIALS",
+    "deployment_url": "https://aitss.xor01.com/",
+    "deployment_check": "HTTP_404_ON_2026-09-20"
+  }
+}

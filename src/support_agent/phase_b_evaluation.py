@@ -136,6 +136,30 @@ def retrieval_metrics(
 def router_metrics(records: Sequence[Mapping[str, Any]]) -> dict[str, Any]:
     """Calculate routing quality and retain wrong-route examples."""
     count = len(records)
+    routes = sorted(
+        {
+            str(record[key])
+            for record in records
+            for key in ("expected_route", "actual_route")
+        }
+    )
+    per_route_f1: dict[str, float] = {}
+    for route in routes:
+        true_positive = sum(
+            record["expected_route"] == route and record["actual_route"] == route
+            for record in records
+        )
+        false_positive = sum(
+            record["expected_route"] != route and record["actual_route"] == route
+            for record in records
+        )
+        false_negative = sum(
+            record["expected_route"] == route and record["actual_route"] != route
+            for record in records
+        )
+        precision = _safe_divide(true_positive, true_positive + false_positive)
+        recall = _safe_divide(true_positive, true_positive + false_negative)
+        per_route_f1[route] = _safe_divide(2 * precision * recall, precision + recall)
     wrong_routes = [
         {
             "id": record.get("id"),
@@ -147,6 +171,8 @@ def router_metrics(records: Sequence[Mapping[str, Any]]) -> dict[str, Any]:
     ]
     return {
         "routing_accuracy": _safe_divide(count - len(wrong_routes), count),
+        "macro_f1": _safe_divide(sum(per_route_f1.values()), len(per_route_f1)),
+        "per_route_f1": per_route_f1,
         "fallback_rate": _safe_divide(sum(bool(record.get("fallback")) for record in records), count),
         "average_latency_ms": _safe_divide(sum(float(record["latency_ms"]) for record in records), count),
         "wrong_routes": wrong_routes,
