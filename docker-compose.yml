@@ -23,7 +23,7 @@ services:
   open-webui:
     image: ghcr.io/open-webui/open-webui:main
     ports:
-      - "3000:8080"
+      - "3100:8080"
     volumes:
       - openwebui:/app/backend/data
     depends_on:
