@@ -1,0 +1,35 @@
+services:
+  support-agent:
+    build: .
+    container_name: support-agent
+    env_file: .env
+    ports:
+      - "8000:8000"
+    volumes:
+      - ./src/support_agent/models:/app/src/support_agent/models:ro
+      - ./data:/app/data
+    restart: unless-stopped
+
+  postgres:
+    image: postgres:16
+    environment:
+      POSTGRES_DB: support
+      POSTGRES_USER: support
+      POSTGRES_PASSWORD: support
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    restart: unless-stopped
+
+  open-webui:
+    image: ghcr.io/open-webui/open-webui:main
+    ports:
+      - "3000:8080"
+    volumes:
+      - openwebui:/app/backend/data
+    depends_on:
+      - support-agent
+    restart: unless-stopped
+
+volumes:
+  pgdata:
+  openwebui:

@@ -53,6 +53,19 @@ class SupportAgentGraphTests(unittest.TestCase):
         self.assertEqual(len(result["tool_results"]), 1)
         self.assertEqual(result["answer"], "Used 1 diagnostic result")
 
+    def test_default_graph_survives_unavailable_classifier(self):
+        with tempfile.TemporaryDirectory() as directory:
+            with patch("support_agent.tools.tickets.DB_PATH", Path(directory) / "support.db"):
+                graph = build_support_graph()
+                result = graph.invoke(
+                    {"user_message": "The API returns 503 after deployment."}
+                )
+
+        self.assertEqual(result["route"], "deployment")
+        self.assertEqual(result["intent"], "deployment")
+        self.assertEqual(len(result["tool_results"]), 1)
+        self.assertIn("Support analysis", result["answer"])
+
     def test_compiled_graph_runs_escalation_path(self):
         with tempfile.TemporaryDirectory() as directory:
             with patch("support_agent.tools.tickets.DB_PATH", Path(directory) / "support.db"):

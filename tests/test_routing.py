@@ -1,6 +1,6 @@
 import unittest
 
-from support_agent.routing.classifier_router import baseline_router
+from support_agent.routing.classifier_router import baseline_router, resilient_router
 from support_agent.routing.hybrid_router import hybrid_route
 from support_agent.routing.llm_router import (
     RouterResponseError,
@@ -43,6 +43,21 @@ class RoutingTests(unittest.TestCase):
         self.assertFalse(high["fallback"])
         self.assertEqual(low["route"], "support_specialist")
         self.assertTrue(low["fallback"])
+
+    def test_resilient_router_uses_deterministic_route_when_classifier_is_unavailable(self):
+        def unavailable_classifier(_text):
+            raise RuntimeError("model artifacts are unavailable")
+
+        result = resilient_router(
+            "The API returns 503 after deployment.",
+            predict_intent=unavailable_classifier,
+        )
+
+        self.assertEqual(result["route"], "deployment")
+        self.assertEqual(result["intent"], "deployment")
+        self.assertEqual(result["source"], "deterministic_fallback")
+        self.assertTrue(result["fallback"])
+        self.assertEqual(result["failure_mode"], "classifier_unavailable")
 
     def test_llm_prompt_contains_two_few_shot_examples(self):
         prompt = build_router_prompt("My service keeps restarting")

@@ -1,3 +1,4 @@
+import json
 import unittest
 
 from fastapi.testclient import TestClient
@@ -30,6 +31,30 @@ class OpenAICompatibleApiTests(unittest.TestCase):
         self.assertEqual(response.status_code, 200)
         self.assertEqual(response.json()["data"][0]["id"], MODEL_ID)
 
+    def test_readiness_reports_runtime_mode_without_loading_the_model(self):
+        readiness = {
+            "status": "ready",
+            "mode": "deterministic_fallback",
+            "components": {
+                "api": {"ready": True},
+                "intent_classifier": {
+                    "ready": False,
+                    "reason": "missing_config",
+                },
+            },
+        }
+        client = TestClient(
+            create_app(
+                agent_invoker=self.invoker,
+                readiness_provider=lambda: readiness,
+            )
+        )
+
+        response = client.get("/ready")
+
+        self.assertEqual(response.status_code, 200)
+        self.assertEqual(response.json(), readiness)
+
     def test_chat_completion_uses_latest_user_message_and_openai_shape(self):
         response = self.client.post(
             "/v1/chat/completions",
@@ -59,14 +84,25 @@ class OpenAICompatibleApiTests(unittest.TestCase):
         self.assertEqual(self.invoker.calls[0]["user_message"], "The API returns 503 after deployment.")
         self.assertEqual(self.invoker.calls[0]["trace_id"], payload["id"])
 
-    def test_streaming_is_rejected(self):
+    def test_streaming_returns_openai_compatible_sse_events(self):
         response = self.client.post(
             "/v1/chat/completions",
             json={"messages": [{"role": "user", "content": "hello"}], "stream": True},
         )
 
-        self.assertEqual(response.status_code, 400)
-        self.assertEqual(response.json()["detail"], "Streaming is not required for this challenge")
+        self.assertEqual(response.status_code, 200)
+        self.assertTrue(response.headers["content-type"].startswith("text/event-stream"))
+        events = [line.removeprefix("data: ") for line in response.text.splitlines() if line]
+        self.assertEqual(events[-1], "[DONE]")
+        chunks = [json.loads(event) for event in events[:-1]]
+        self.assertEqual(chunks[0]["object"], "chat.completion.chunk")
+        self.assertEqual(
+            chunks[0]["choices"][0]["delta"],
+            {"role": "assistant", "content": "Check the deployment logs."},
+        )
+        self.assertIsNone(chunks[0]["choices"][0]["finish_reason"])
+        self.assertEqual(chunks[1]["choices"][0]["delta"], {})
+        self.assertEqual(chunks[1]["choices"][0]["finish_reason"], "stop")
 
     def test_request_requires_a_user_message(self):
         response = self.client.post(
