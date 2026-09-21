@@ -55,7 +55,9 @@ class SupportAgentGraphTests(unittest.TestCase):
 
     def test_default_graph_survives_unavailable_classifier(self):
         with tempfile.TemporaryDirectory() as directory:
-            with patch("support_agent.tools.tickets.DB_PATH", Path(directory) / "support.db"):
+            with patch.dict("os.environ", {"OPENAI_API_KEY": "local-demo-key"}), patch(
+                "support_agent.tools.tickets.DB_PATH", Path(directory) / "support.db"
+            ):
                 graph = build_support_graph()
                 result = graph.invoke(
                     {"user_message": "The API returns 503 after deployment."}

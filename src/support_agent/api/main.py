@@ -11,6 +11,7 @@ from fastapi.responses import StreamingResponse
 
 from support_agent.observability.tracing import invoke_with_langfuse
 from support_agent.routing.classifier_router import classifier_runtime_status
+from support_agent.routing.hybrid_router import openai_router_runtime_status
 from support_agent.schemas.chat import ChatCompletionRequest
 
 
@@ -21,12 +22,20 @@ ReadinessProvider = Callable[[], dict[str, Any]]
 
 def runtime_readiness() -> dict[str, Any]:
     classifier = classifier_runtime_status()
+    llm_router = openai_router_runtime_status()
     return {
         "status": "ready",
-        "mode": "model" if classifier["ready"] else "deterministic_fallback",
+        "mode": (
+            "classifier"
+            if classifier["ready"]
+            else "gpt_router"
+            if llm_router["configured"]
+            else "deterministic_fallback"
+        ),
         "components": {
             "api": {"ready": True},
             "intent_classifier": classifier,
+            "llm_router": llm_router,
         },
     }
 

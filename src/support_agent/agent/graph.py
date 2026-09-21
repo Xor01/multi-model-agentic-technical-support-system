@@ -13,12 +13,12 @@ from support_agent.agent.nodes import (
     support_node,
     tool_node,
 )
-from support_agent.routing.classifier_router import resilient_router
+from support_agent.routing.hybrid_router import configured_hybrid_route
 from support_agent.schemas.state import SupportState
 
 
 def build_support_graph(
-    router: Router = resilient_router,
+    router: Router = configured_hybrid_route,
     qa_runner: QARunner = default_qa_runner,
     support_runner: SupportRunner = default_support_runner,
 ):

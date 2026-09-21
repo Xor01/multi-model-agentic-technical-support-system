@@ -153,7 +153,10 @@ def build_submission_evidence() -> dict[str, Any]:
         "evidence_policy": "Real local executions and saved notebook outputs only; missing values are not inferred.",
         "models": build_learning_report(),
         "artifacts": _artifact_inventory(),
-        "deployed_router": router,
+        "offline_router": {
+            "evaluation_mode": "resilient_router_without_paid_provider_calls",
+            **router,
+        },
         "retrieval": retrieval_metrics(relevant, ranked, k=5),
         "end_to_end_agent": agent_metrics(
             [

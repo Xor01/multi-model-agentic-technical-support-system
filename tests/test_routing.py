@@ -1,16 +1,61 @@
 import unittest
 
 from support_agent.routing.classifier_router import baseline_router, resilient_router
-from support_agent.routing.hybrid_router import hybrid_route
+from support_agent.routing.hybrid_router import configured_hybrid_route, hybrid_route
 from support_agent.routing.llm_router import (
     RouterResponseError,
     build_router_prompt,
+    invoke_openai_router,
     parse_router_response,
 )
 from support_agent.routing.rules import rule_first
 
 
 class RoutingTests(unittest.TestCase):
+    def test_openai_router_uses_gpt_5_mini_and_strict_schema(self):
+        class FakeCompletions:
+            def __init__(self):
+                self.kwargs = None
+
+            def create(self, **kwargs):
+                self.kwargs = kwargs
+                message = type("Message", (), {"content": '{"route":"qa"}'})()
+                choice = type("Choice", (), {"message": message})()
+                return type("Response", (), {"choices": [choice]})()
+
+        completions = FakeCompletions()
+        client = type(
+            "Client",
+            (),
+            {"chat": type("Chat", (), {"completions": completions})()},
+        )()
+
+        raw = invoke_openai_router(
+            build_router_prompt("What do the docs say?"), client=client
+        )
+
+        self.assertEqual(raw, '{"route":"qa"}')
+        self.assertEqual(completions.kwargs["model"], "gpt-5-mini")
+        self.assertEqual(
+            completions.kwargs["response_format"]["json_schema"]["schema"]
+            ["additionalProperties"],
+            False,
+        )
+
+    def test_configured_hybrid_uses_llm_if_classifier_is_unavailable(self):
+        def unavailable_classifier(_text):
+            raise RuntimeError("missing classifier")
+
+        result = configured_hybrid_route(
+            "This is ambiguous",
+            predict_intent=unavailable_classifier,
+            invoke_llm=lambda _messages: '{"route":"tools"}',
+        )
+
+        self.assertEqual(result["route"], "tools")
+        self.assertEqual(result["source"], "llm")
+        self.assertEqual(result["classifier_failure"], "RuntimeError")
+
     def test_rule_first_routes_safety_and_documentation_phrases(self):
         self.assertEqual(
             rule_first("Production down after suspected corruption"),

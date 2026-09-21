@@ -8,10 +8,10 @@ This learning project exposes a LangGraph support workflow through an OpenAI-com
 
 The API and Docker stack run, but the current checkout is **not production-ready**:
 
-- Model A's weight file is a Git LFS pointer and its `config.json` is absent, so runtime routing uses a deterministic fallback.
+- Model A's weight file is a Git LFS pointer and its `config.json` is absent, so ambiguous routing uses `gpt-5-mini` when a real OpenAI key is configured, then falls back deterministically if the API is unavailable.
 - Model B and Model C artifacts exist, but their inference runners are not connected to the graph; deterministic QA/support runners are used.
 - No pre-fine-tuning baseline was recorded, so none of the three model quality gates can be claimed as passed.
-- The latest local Golden Set run passed 1 of 10 required cases.
+- The GPT-5 Mini routed Golden Set run passed 3 of 10 required cases; the quality gate still fails.
 - The supplied deployment URL, <https://aitss.xor01.com/>, returned HTTP 404 when checked on 2026-09-20.
 - Langfuse credentials were rejected by both the default/EU and US cloud hosts, so no valid trace URL or screenshot is claimed.
 
@@ -21,10 +21,10 @@ See [the evaluation report](docs/TRAINING_EVALUATION_REPORT.md) for measurements
 
 ```mermaid
 flowchart LR
-    UI[Open WebUI :3100] --> API[OpenAI-compatible FastAPI :8001]
+    UI[Open WebUI :3000] --> API[OpenAI-compatible FastAPI :8000]
     API --> TRACE[Langfuse callback]
     API --> GRAPH[LangGraph]
-    GRAPH --> ROUTER[Hard rules -> classifier -> fallback]
+    GRAPH --> ROUTER[Hard rules -> classifier -> GPT-5 Mini -> fallback]
     ROUTER -->|qa| QA[KB retrieval + Model B slot]
     ROUTER -->|tools| TOOLS[Diagnostic runbook / 13 tools]
     ROUTER -->|support| SUPPORT[Model C specialist slot]
@@ -35,7 +35,7 @@ flowchart LR
     HUMAN --> ANSWER
 ```
 
-The implemented policy is safety rules first, the fine-tuned classifier when it is loadable, and a deterministic fallback when it is not. `hybrid_router.py` also supports an LLM router for ambiguous cases, but no live small-LLM invoker is configured in this checkout.
+The implemented policy is safety rules first, the fine-tuned classifier when it is loadable, `gpt-5-mini` for ambiguous cases, and a deterministic fallback if the provider is unavailable. Set a real `OPENAI_API_KEY` in `.env`; `OPENAI_ROUTER_MODEL` defaults to `gpt-5-mini`.
 
 ## Run with Docker Compose
 
@@ -49,11 +49,11 @@ docker compose ps
 
 Open:
 
-- Open WebUI: <http://localhost:3100>
-- API health: <http://localhost:8001/health>
-- API readiness: <http://localhost:8001/ready>
-- Model list: <http://localhost:8001/v1/models>
-- API docs: <http://localhost:8001/docs>
+- Open WebUI: <http://localhost:3000>
+- API health: <http://localhost:8000/health>
+- API readiness: <http://localhost:8000/ready>
+- Model list: <http://localhost:8000/v1/models>
+- API docs: <http://localhost:8000/docs>
 
 In Open WebUI, add an OpenAI-compatible connection with:
 
@@ -61,7 +61,7 @@ In Open WebUI, add an OpenAI-compatible connection with:
 - API key: `local-demo-key`
 - Model: `tuwaiq-tech-support-agent`
 
-The container listens on port 8000 internally; port 8001 is only the host mapping.
+The container and host both use port 8000 in the current Compose file. Change the host side of `8000:8000` if that port is occupied.
 
 Test the API directly:
 
@@ -75,7 +75,7 @@ $body = @{
 } | ConvertTo-Json -Depth 5
 
 Invoke-RestMethod `
-  -Uri http://localhost:8001/v1/chat/completions `
+  -Uri http://localhost:8000/v1/chat/completions `
   -Method Post `
   -Headers @{ Authorization = "Bearer local-demo-key" } `
   -ContentType "application/json" `
@@ -104,7 +104,7 @@ uv run python -m support_agent.submission_evaluation
 docker compose config --quiet
 ```
 
-The evaluation command executes the deployed router over 400 labeled intent rows, retrieval over 100 local QA records, and all 10 Golden Set cases. It does not fabricate missing baselines or trainer curves.
+The evaluation command measures the offline resilient router over 400 labeled intent rows, retrieval over 100 local QA records, and the configured graph over all 10 Golden Set cases. The Golden Set can make paid GPT-5 Mini calls when a real key is configured; the 400-row router run deliberately remains offline. It does not fabricate missing baselines or trainer curves.
 
 ## Submission evidence
 

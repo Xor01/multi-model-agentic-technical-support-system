@@ -18,10 +18,10 @@ The intended production order is:
 
 1. Hard safety and escalation rules.
 2. Model A when confidence is at least 0.75.
-3. The small LLM router for ambiguous inputs.
+3. OpenAI `gpt-5-mini` with a strict JSON schema for ambiguous inputs.
 4. A safe support-specialist fallback if routing infrastructure fails.
 
-The current deployed graph uses `resilient_router`. Because Model A is unavailable in this checkout, 397 of 400 evaluation rows used the deterministic fallback and three matched hard rules. This is operational degradation, not a successful hybrid-router comparison. The rules/classifier and LLM-only alternatives remain `NOT_EVALUATED` end to end.
+The deployed graph uses `configured_hybrid_route`. If Model A is unavailable, it sends ambiguous requests to `gpt-5-mini` when `OPENAI_API_KEY` is configured and uses deterministic routing if the provider is unavailable. The recorded 400-row evaluation predates this provider integration and used 397 deterministic fallbacks plus three hard rules; it must not be presented as a measured GPT-5 Mini result. The rules/classifier and LLM-only alternatives remain `NOT_EVALUATED` end to end.
 
 ## Graph flow
 
@@ -56,7 +56,7 @@ The lab favors deterministic local implementations. SQL and file access are rest
 
 ## Evaluation gates
 
-A model cannot pass merely because training completed. Each model needs a recorded pre-fine-tuning baseline, required task metrics, and no required Golden Set regression. The current model gates are `NOT_EVALUATED` because baseline records are absent. The current end-to-end gate is `FAIL` because only G07 passed.
+A model cannot pass merely because training completed. Each model needs a recorded pre-fine-tuning baseline, required task metrics, and no required Golden Set regression. The current model gates are `NOT_EVALUATED` because baseline records are absent. The post-integration end-to-end gate remains `FAIL`: GPT-5 Mini routing improved the Golden Set result from 1/10 to 3/10, with G02, G05, and G08 passing.
 
 The retrieval score is a same-corpus check: each question is searched against the corpus containing its own reference answer. Its perfect score verifies indexing/ranking plumbing but is optimistic and is not an independent generalization result.
 
@@ -68,6 +68,6 @@ Current credentials returned HTTP 401 on the default/EU and US Langfuse cloud ho
 
 ## Deployment
 
-FastAPI is exposed on host port 8001 and Open WebUI on host port 3100. Open WebUI must call `http://support-agent:8000/v1` inside the Compose network. PostgreSQL is included for the deployment exercise, while the current ticket tool still uses the local SQLite lab database.
+The current Compose file exposes FastAPI on host port 8000 and Open WebUI on host port 3000. Open WebUI must call `http://support-agent:8000/v1` inside the Compose network. PostgreSQL is included for the deployment exercise, while the current ticket tool still uses the local SQLite lab database.
 
 The supplied public URL is `https://aitss.xor01.com/`, but it returned HTTP 404 during the 2026-09-20 verification. It is therefore a deployment reference, not verified demo evidence.

@@ -2,9 +2,12 @@ from __future__ import annotations
 
 from collections.abc import Callable
 import json
+import os
+from typing import Any
 
 
 ALLOWED_ROUTES = {"qa", "support_specialist", "tools", "escalate"}
+DEFAULT_OPENAI_ROUTER_MODEL = "gpt-5-mini"
 
 ROUTER_SYSTEM = """
 You are a routing controller for a technical support system.
@@ -54,3 +57,45 @@ def llm_route(
 ) -> dict[str, str]:
     """Route with the existing small instruction model via its generation callback."""
     return parse_router_response(invoke_llm(build_router_prompt(user_message)))
+
+
+def invoke_openai_router(
+    messages: list[dict[str, str]],
+    *,
+    client: Any = None,
+    model: str | None = None,
+) -> str:
+    """Invoke GPT-5 Mini with a strict one-field routing schema."""
+    if client is None:
+        from openai import OpenAI
+
+        client = OpenAI()
+
+    response = client.chat.completions.create(
+        model=model or os.getenv("OPENAI_ROUTER_MODEL", DEFAULT_OPENAI_ROUTER_MODEL),
+        messages=messages,
+        max_completion_tokens=256,
+        reasoning_effort="low",
+        response_format={
+            "type": "json_schema",
+            "json_schema": {
+                "name": "support_route",
+                "strict": True,
+                "schema": {
+                    "type": "object",
+                    "properties": {
+                        "route": {
+                            "type": "string",
+                            "enum": sorted(ALLOWED_ROUTES),
+                        }
+                    },
+                    "required": ["route"],
+                    "additionalProperties": False,
+                },
+            },
+        },
+    )
+    content = response.choices[0].message.content
+    if not content:
+        raise RouterResponseError("OpenAI router returned an empty response")
+    return content
