@@ -226,39 +226,69 @@ def evaluate_golden_set(
     }
 
 
-# These are observed notebook outputs, not newly generated or inferred scores.
+# These are observed saved notebook outputs, not generated or inferred scores.
+# The paired metrics are from the new reruns; earlier values remain historical.
 NOTEBOOK_EVIDENCE = {
     "model_a": {
         "source": "src/support_agent/models/intent_classifier/Model_A_Intent_Classifier.ipynb",
+        "baseline": {
+            "loss": 2.096397638320923,
+            "accuracy": 0.1125,
+            "precision_macro": 0.014423076923076924,
+            "recall_macro": 0.1125,
+            "f1_macro": 0.02556818181818182,
+        },
         "fine_tuned": {
-            "accuracy": 0.925,
-            "precision_macro": 0.930997,
-            "recall_macro": 0.925,
-            "f1_macro": 0.925195,
+            "loss": 0.6469675302505493,
+            "accuracy": 0.9375,
+            "precision_macro": 0.9409090909090909,
+            "recall_macro": 0.9375,
+            "f1_macro": 0.9373015873015873,
             "per_class_recall": {
                 "authentication": 0.8,
                 "network": 1.0,
                 "deployment": 0.9,
-                "database": 0.8,
+                "database": 0.9,
                 "gpu": 1.0,
                 "api": 0.9,
                 "package": 1.0,
                 "general": 1.0,
             },
         },
+        "historical_fine_tuned": {
+            "accuracy": 0.925,
+            "precision_macro": 0.930997,
+            "recall_macro": 0.925,
+            "f1_macro": 0.925195,
+        },
     },
     "model_b": {
         "source": "src/support_agent/models/qa_model/Model_B_—_Technical_Extractive_QA.ipynb",
-        "fine_tuned": {"best_validation_loss": 0.550299, "best_epoch": 4},
-        "missing_required_metrics": ["exact_match", "token_f1", "long_context_error_cases"],
+        "baseline": {
+            "loss": 5.941798210144043,
+            "exact_match": 0.0,
+            "token_f1": 0.10555555555555556,
+        },
+        "fine_tuned": {
+            "loss": 1.8458951711654663,
+            "exact_match": 0.5333333333333333,
+            "token_f1": 0.6222222222222222,
+        },
+        "historical_fine_tuned": {"best_validation_loss": 0.550299, "best_epoch": 4},
+        "missing_required_metrics": ["long_context_case_coverage"],
     },
     "model_c": {
         "source": "src/support_agent/models/support_adapter/Model_C_—_Instruction_Tuned_Support_Specialist.ipynb",
+        "baseline": {"loss": 4.017305374145508, "perplexity": 55.551214228496},
         "fine_tuned": {
+            "loss": 2.0222268104553223,
+            "perplexity": 7.555130058409286,
+        },
+        "historical_fine_tuned": {
             "final_eval_loss": 2.0066,
             "final_perplexity": perplexity_from_loss(2.0066),
         },
-        "missing_required_metrics": ["rouge", "golden_set", "error_categories"],
+        "missing_required_metrics": ["model_c_golden_set", "error_categories"],
     },
 }
 
@@ -267,19 +297,19 @@ def build_learning_report() -> dict[str, Any]:
     """Build the Phase B status without treating missing measurements as passes."""
     return {
         "model_a": {
-            "baseline": {},
+            "baseline": NOTEBOOK_EVIDENCE["model_a"]["baseline"],
             "fine_tuned": NOTEBOOK_EVIDENCE["model_a"]["fine_tuned"],
-            "quality_gate": {"status": NOT_EVALUATED, "reason": "baseline metrics are missing"},
+            "quality_gate": {"status": NOT_EVALUATED, "reason": "classifier artifact and routing acceptance are not verified"},
         },
         "model_b": {
-            "baseline": {},
+            "baseline": NOTEBOOK_EVIDENCE["model_b"]["baseline"],
             "fine_tuned": NOTEBOOK_EVIDENCE["model_b"]["fine_tuned"],
-            "quality_gate": {"status": NOT_EVALUATED, "reason": "baseline, EM, token F1, and diagnostics are missing"},
+            "quality_gate": {"status": NOT_EVALUATED, "reason": "long-context case coverage and deployed Model B inference are not verified"},
         },
         "model_c": {
-            "baseline": {},
+            "baseline": NOTEBOOK_EVIDENCE["model_c"]["baseline"],
             "fine_tuned": NOTEBOOK_EVIDENCE["model_c"]["fine_tuned"],
-            "quality_gate": {"status": NOT_EVALUATED, "reason": "baseline and Golden Set results are missing"},
+            "quality_gate": {"status": NOT_EVALUATED, "reason": "only validation metrics are paired; Model C Golden Set and error categories are missing"},
         },
         "retrieval_tools": {"baseline": {}, "fine_tuned": {}, "quality_gate": {"status": NOT_EVALUATED, "reason": "retrieval implementation and runs are missing"}},
         "router": {"baseline": {}, "fine_tuned": {}, "quality_gate": {"status": NOT_EVALUATED, "reason": "router implementation and runs are missing"}},

@@ -4,6 +4,7 @@ import unittest
 from support_agent.phase_b_evaluation import (
     GOLDEN_SET,
     agent_metrics,
+    build_learning_report,
     classification_metrics,
     evaluate_golden_set,
     perplexity_from_loss,
@@ -106,6 +107,18 @@ class PhaseBEvaluationTests(unittest.TestCase):
 
         self.assertFalse(result["passed"])
         self.assertEqual(result["not_evaluated"], ["G01"])
+
+    def test_learning_report_keeps_paired_notebook_baselines_without_claiming_gate(self):
+        report = build_learning_report()
+
+        self.assertAlmostEqual(report["model_a"]["baseline"]["accuracy"], 0.1125)
+        self.assertAlmostEqual(report["model_a"]["fine_tuned"]["accuracy"], 0.9375)
+        self.assertAlmostEqual(report["model_b"]["baseline"]["exact_match"], 0.0)
+        self.assertAlmostEqual(report["model_b"]["fine_tuned"]["token_f1"], 0.6222222222222222)
+        self.assertAlmostEqual(report["model_c"]["baseline"]["perplexity"], 55.551214228496)
+        self.assertAlmostEqual(report["model_c"]["fine_tuned"]["perplexity"], 7.555130058409286)
+        for model in ("model_a", "model_b", "model_c"):
+            self.assertEqual(report[model]["quality_gate"]["status"], "NOT_EVALUATED")
 
 
 if __name__ == "__main__":

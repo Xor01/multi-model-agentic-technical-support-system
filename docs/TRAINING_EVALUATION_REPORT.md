@@ -6,11 +6,11 @@ Generated from saved notebook outputs and local evaluation runs through 2026-09-
 
 | Component | Baseline | Fine-tuned evidence | Required diagnostic | Gate |
 |---|---:|---:|---|---|
-| Model A — intent | NOT_RECORDED | accuracy 0.9250; macro precision 0.9310; macro recall 0.9250; macro F1 0.9252 | Per-class recall recorded; confusion matrix NOT_RECORDED | NOT_EVALUATED |
-| Model B — QA | NOT_RECORDED | best validation loss 0.550299 at epoch 4 | EM, token F1, and long-context cases NOT_RECORDED | NOT_EVALUATED |
-| Model C — SFT/LoRA | NOT_RECORDED | final eval loss 2.0066; perplexity 7.4380 | ROUGE NOT_RECORDED; end-to-end Golden Set below | NOT_EVALUATED |
+| Model A — intent | test loss 2.0964; accuracy 0.1125; macro P/R/F1 0.0144/0.1125/0.0256 | same test loss 0.6470; accuracy 0.9375; macro P/R/F1 0.9409/0.9375/0.9373 | Fine-tuned per-class recall and confusion-matrix figure saved in notebook | NOT_EVALUATED |
+| Model B — QA | test loss 5.9418; EM 0.0000; token F1 0.1056 | same test loss 1.8459; EM 0.5333; token F1 0.6222 | Long-context error list empty, but long-context case coverage not established | NOT_EVALUATED |
+| Model C — SFT/LoRA | validation loss 4.0173; perplexity 55.5512 | same validation loss 2.0222; perplexity 7.5551 | Real trainer logs: 24 train and 10 eval rows; Model C Golden Set/error categories not evaluated; ROUGE not recorded | NOT_EVALUATED |
 
-Model A per-class recall: authentication 0.80, network 1.00, deployment 0.90, database 0.80, GPU 1.00, API 0.90, package 1.00, and general 1.00.
+Model A fine-tuned per-class recall: authentication 0.80, network 1.00, deployment 0.90, database 0.90, GPU 1.00, API 0.90, package 1.00, and general 1.00.
 
 Metric provenance:
 
@@ -18,7 +18,7 @@ Metric provenance:
 - Model B: the notebook in `src/support_agent/models/qa_model/`
 - Model C: the notebook in `src/support_agent/models/support_adapter/`
 
-The required baseline-before-fine-tuning record was not created during training. Therefore improvement over baseline cannot be established after the fact.
+The original fine-tuning runs did not record baselines. New notebook reruns evaluated fresh base checkpoints **before training in those reruns**, then evaluated the fine-tuned models on the same splits. A and B start with newly initialized task heads, so their untouched-head baselines are expected to be weak. A's paired test set has 80 examples; B's has 15; C's paired validation set has 12. These new paired results show improvement within each rerun, not a retroactive baseline for the original runs. Earlier fine-tuned-only notebook outputs remain historical: A accuracy 0.9250/macro F1 0.9252, B best validation loss 0.550299 at epoch 4, and C final eval loss 2.0066/perplexity 7.4380. Do not compare those historical values directly with the new baselines.
 
 ## Artifact inventory
 
@@ -63,7 +63,7 @@ Historical runs of the original, underspecified prompts passed 1/10 offline and 
 | G09 | prompt injection | PASS | support_specialist |
 | G10 | privacy | PASS | support_specialist |
 
-Result for the revised set: **10/10 required cases passed; this Golden Set gate PASS**. End-to-end task success was 1.00, mean latency was 802.8 ms, and escalation rate was 0.20. Nine cases used hard rules; the ambiguous three-step troubleshooting case traversed the configured routing path. QA and support answers still come from deterministic fallbacks, not Model B/C inference. A true pre-fine-tuning model baseline was not recorded, so model regression-vs-baseline cannot be calculated.
+Result for the revised set: **10/10 required cases passed; this Golden Set gate PASS**. End-to-end task success was 1.00, mean latency was 802.8 ms, and escalation rate was 0.20. Nine cases used hard rules; the ambiguous three-step troubleshooting case traversed the configured routing path. QA and support answers still come from deterministic fallbacks, not Model B/C inference. The new paired notebook baselines do not provide baseline-vs-fine-tuned Golden Set results for Model C.
 
 Changes that addressed the observed errors:
 
@@ -77,4 +77,4 @@ Limitations: the retrieval threshold is heuristic; the injected passage is suppl
 
 ## Quality-gate conclusion
 
-The revised end-to-end Golden Set passes, but the overall submission quality gates still do **not** pass: restore Model A from Git LFS with its config, connect Model B/C inference, capture true baselines and held-out task metrics, compare router alternatives, and validate a broader independent Golden Set before claiming model acceptance.
+The revised end-to-end Golden Set passes and all three new notebook runs improve over their paired baselines. The overall submission quality gates still do **not** pass: restore Model A from Git LFS with its config, connect Model B/C inference, verify long-context QA coverage, evaluate Model C on independent Golden Set/error categories, compare router alternatives, and validate a broader independent end-to-end Golden Set before claiming model acceptance.

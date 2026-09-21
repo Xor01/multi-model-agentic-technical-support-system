@@ -10,7 +10,7 @@ The API and Docker stack run, but the current checkout is **not production-ready
 
 - Model A's weight file is a Git LFS pointer and its `config.json` is absent, so ambiguous routing uses `gpt-5-mini` when a real OpenAI key is configured, then falls back deterministically if the API is unavailable.
 - Model B and Model C artifacts exist, but their inference runners are not connected to the graph; deterministic QA/support runners are used.
-- No pre-fine-tuning baseline was recorded, so none of the three model quality gates can be claimed as passed.
+- The original training runs lacked baselines; new notebook reruns record paired base/fine-tuned metrics for all three models. Their quality gates remain pending for the diagnostics and deployment checks listed in the training report.
 - The revised, concrete Golden Set passed 10 of 10 cases in the configured run on 2026-09-21. This is an end-to-end behavior gate, not proof that the three fine-tuned models pass their separate gates.
 - The supplied deployment URL, <https://aitss.xor01.com/>, returned HTTP 404 when checked on 2026-09-20.
 - Langfuse credentials were rejected by both the default/EU and US cloud hosts, so no valid trace URL or screenshot is claimed.
