@@ -56,7 +56,7 @@ The lab favors deterministic local implementations. SQL and file access are rest
 
 ## Evaluation gates
 
-A model cannot pass merely because training completed. Each model needs a recorded pre-fine-tuning baseline, required task metrics, and no required Golden Set regression. The current model gates are `NOT_EVALUATED` because baseline records are absent. The post-integration end-to-end gate remains `FAIL`: GPT-5 Mini routing improved the Golden Set result from 1/10 to 3/10, with G02, G05, and G08 passing.
+A model cannot pass merely because training completed. Each model needs a recorded pre-fine-tuning baseline, required task metrics, and no required Golden Set regression. The current model gates are `NOT_EVALUATED` because baseline records are absent. A revised Golden Set with concrete questions, a synthetic exposed token and ticket, and an injected context passage passed 10/10 on 2026-09-21. Earlier 1/10 and 3/10 runs used different, underspecified prompts; they are retained as history, not compared as equivalent scores. The passing gate covers the current ten scenarios only, not arbitrary production inputs.
 
 The retrieval score is a same-corpus check: each question is searched against the corpus containing its own reference answer. Its perfect score verifies indexing/ranking plumbing but is optimistic and is not an independent generalization result.
 

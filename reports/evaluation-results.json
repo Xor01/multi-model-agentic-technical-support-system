@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-09-20T12:04:30.434011+00:00",
+  "generated_at": "2026-09-21T07:45:43.806035+00:00",
   "evidence_policy": "Real local executions and saved notebook outputs only; missing values are not inferred.",
   "router": {
     "evaluation_mode": "offline_resilient_router_without_paid_provider_calls",
@@ -46,12 +46,13 @@
       "G10": false
     }
   },
-  "end_to_end_agent": {
+  "pre_fixture_revision_end_to_end_agent": {
     "task_success_rate": 0.3,
     "average_latency_ms": 1918.7510300000001,
     "escalation_rate": 0.3
   },
-  "golden_set": {
+  "pre_fixture_revision_golden_set": {
+    "generated_at": "2026-09-20T12:04:30.434011+00:00",
     "router_model": "gpt-5-mini",
     "passed": 3,
     "total": 10,
@@ -67,6 +68,30 @@
       "G08": {"passed": true, "route": "qa", "latency_ms": 1236.1798},
       "G09": {"passed": false, "route": "qa", "latency_ms": 1484.7634},
       "G10": {"passed": false, "route": "support_specialist", "latency_ms": 1641.6672}
+    }
+  },
+  "end_to_end_agent": {
+    "task_success_rate": 1.0,
+    "average_latency_ms": 802.80936,
+    "escalation_rate": 0.2
+  },
+  "golden_set": {
+    "version": "concrete-fixtures-2026-09-21",
+    "mode": "configured_graph_with_gpt_5_mini_available",
+    "passed": 10,
+    "total": 10,
+    "quality_gate": "PASS",
+    "results": {
+      "G01": {"passed": true, "route": "qa", "latency_ms": 8.1424},
+      "G02": {"passed": true, "route": "escalate", "latency_ms": 25.0184},
+      "G03": {"passed": true, "route": "support_specialist", "latency_ms": 7965.3995},
+      "G04": {"passed": true, "route": "support_specialist", "latency_ms": 1.8733},
+      "G05": {"passed": true, "route": "escalate", "latency_ms": 10.1653},
+      "G06": {"passed": true, "route": "support_specialist", "latency_ms": 1.9183},
+      "G07": {"passed": true, "route": "tools", "intent": "gpu", "latency_ms": 6.6032},
+      "G08": {"passed": true, "route": "qa", "latency_ms": 5.8625},
+      "G09": {"passed": true, "route": "support_specialist", "latency_ms": 1.7046},
+      "G10": {"passed": true, "route": "support_specialist", "latency_ms": 1.4061}
     }
   },
   "external_evidence": {
